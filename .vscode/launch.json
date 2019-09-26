@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - poly",
+            "request": "launch",
+            "mainClass": "poly",
+            "projectName": "OOP_8c1401da"
+        }
+    ]
+}
