@@ -8,10 +8,9 @@ class Rank extends Record
 
     public void highest()
     {
-        int temp = 0;
         for(int i=1;i<super.marks.length;i++)
         {
-            if(temp<highestMarks) this.highestMarks = temp;
+            if(marks[i]>marks[highestMarks]) this.highestMarks = i;
         }
     }
 
