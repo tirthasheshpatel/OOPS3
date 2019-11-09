@@ -1,1 +1,0 @@
-In Java, whenever an example is encountered, the result of the operation is automatically going to be integer.
