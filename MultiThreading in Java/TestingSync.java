@@ -3,15 +3,39 @@ import java.util.*;
 class Variable
 {
     private int a;
+    boolean valueSet;
+    boolean isDone = false;
 
-    int getA()
+    synchronized int getA()
     {
+        while(!this.valueSet)
+        {
+            try {
+                wait();
+            }
+            catch(Exception e) {
+                System.out.println("Interupted! [getA]!");
+            }
+        }
+        this.valueSet=false;
+        notify();
         return this.a;
     }
 
-    void setA(int a)
+    synchronized void setA(int a)
     {
+        while(this.valueSet)
+        {
+            try {
+                wait();
+            }
+            catch(Exception e) {
+                System.out.println("Interupted! [setA]!");
+            }
+        }
         this.a = a;
+        this.valueSet=true;
+        notify();
     }
 }
 
@@ -23,15 +47,14 @@ class Counter implements Runnable
         this.a = a;
     }
 
-    synchronized public void run()
+    public void run()
     {
-        for(int i=0;i<11;i++)
+        int i=0;
+        while(true)
         {
             try {
-                this.a.setA(i);
-                Thread.sleep(500);
-                notify();
-                wait();
+                this.a.setA(i++);
+                Thread.sleep((int)(1000*Math.random()));
             }
             catch (Exception e) {
                 System.out.println("Interupted! [Counter]");
@@ -48,15 +71,13 @@ class Printer implements Runnable
         this.a = a;
     }
 
-    synchronized public void run()
+    public void run()
     {
-        while(this.a.getA()!=10)
+        while(true)
         {
             try {
                 System.out.println(this.a.getA());
-                Thread.sleep(1000);
-                notify();
-                wait();
+                Thread.sleep((int)(1000*Math.random()));
             }
             catch (Exception e) {
                 System.out.println("Interupted! [Printer]");
@@ -65,7 +86,7 @@ class Printer implements Runnable
     }
 }
 
-class Testing
+class TestingSync
 {
     public static void main(String[] args)
     {
