@@ -39,7 +39,7 @@ class Spagetti
         this.f1.pickUp();
         System.out.println(name + " eating spagetti!");
         try {
-            Thread.sleep(5000); // eat for 5 seconds
+            Thread.sleep((int)(1000*(Math.random()))); // eat for 5 seconds
         }
         catch (Exception e) {}
         System.out.println(name + " finished eating spagetti!");
@@ -83,7 +83,7 @@ class DiningPhilosophers
         this.philosophers = new Philosopher[5];
 
         for(int i=0;i<5;i++) {
-            if(i==5) {
+            if(i==4) {
                 this.philosophers[i] = new Philosopher(this.forks[(i+1)%5], this.forks[i], "p"+i);
             }
             else this.philosophers[i] = new Philosopher(this.forks[i], this.forks[(i+1)%5], "p"+i);
